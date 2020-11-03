@@ -1,0 +1,12 @@
+name: 'Deploy to Compute@Edge'
+description: 'Build and deploy a Compute@Edge package using the Fastly CLI.'
+inputs:
+  project_directory:
+    description: 'Directory of the project to deploy, relative to the repository root.'
+    required: false
+    default: './'
+runs:
+  using: node12
+  pre: setup/index.js
+  main: build/index.js
+  post: deploy/index.js

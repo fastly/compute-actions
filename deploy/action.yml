@@ -5,6 +5,6 @@ runs:
   main: 'index.js'
 inputs:
   project_directory:
-    description: 'Directory of the project to build'
+    description: 'Directory of the project to build, relative to the repository root.'
     required: false
     default: './'
