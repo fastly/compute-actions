@@ -1,0 +1,10 @@
+name: 'Deploy Compute@Edge Package'
+description: 'Deploys the packaged binary to a Compute@Edge service.'
+runs:
+  using: 'node12'
+  main: 'index.js'
+inputs:
+  project_directory:
+    description: 'Directory of the project to build'
+    required: false
+    default: './'

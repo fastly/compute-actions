@@ -1,0 +1,5 @@
+name: 'Setup Compute@Edge'
+description: 'Downloads and configures the Fastly CLI.'
+runs:
+  using: 'node12'
+  main: 'index.js'

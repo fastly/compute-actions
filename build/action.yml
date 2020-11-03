@@ -1,0 +1,10 @@
+name: 'Build Compute@Edge Package'
+description: 'Compiles a Compute@Edge program to a binary using the Fastly CLI.'
+runs:
+  using: 'node12'
+  main: 'index.js'
+inputs:
+  project_directory:
+    description: 'Directory of the project to build'
+    required: false
+    default: './'

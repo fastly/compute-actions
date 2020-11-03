@@ -1,0 +1,6 @@
+version = 22
+name = "as-test"
+description = "Kailan's testing project for AssemblyScript on Compute@Edge."
+authors = ["kblanks@fastly.com"]
+language = "assemblyscript"
+service_id = "33CwjWt29T8i4wuW9js1t7"

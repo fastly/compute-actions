@@ -1,0 +1,19 @@
+{
+  "name": "as-test",
+  "version": "1.0.0",
+  "description": "Kailan's testing project for AssemblyScript on Compute@Edge.",
+  "main": "src/index.ts",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kailan/as-test.git"
+  },
+  "keywords": [],
+  "author": "kblanks@fastly.com",
+  "license": "MIT",
+  "devDependencies": {
+    "assemblyscript": "^0.14.13"
+  },
+  "dependencies": {
+    "@fastly/as-compute": "^0.1.0"
+  }
+}
