@@ -1,0 +1,16 @@
+{
+  "name": "actions",
+  "version": "1.0.0",
+  "description": "GitHub Actions for building on the Fastly platform.",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/fastly/actions.git"
+  },
+  "author": "Kailan Blanks <kblanks@fastly.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/fastly/actions/issues"
+  },
+  "homepage": "https://github.com/fastly/actions#readme"
+}
