@@ -3,7 +3,7 @@ const exec = require('@actions/exec');
 const tc = require('@actions/tool-cache');
 
 // Download URL for latest Fastly CLI release
-const cliVersion = "v0.18.0";
+const cliVersion = "v0.18.1";
 const downloadURL = `https://github.com/fastly/cli/releases/download/${cliVersion}/fastly_${cliVersion}_linux-amd64.tar.gz`;
 
 checkCLI().then(() => {
