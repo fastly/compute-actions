@@ -27,9 +27,9 @@ jobs:
 
 Alternatively, you can manually run the individual Fastly compute actions if you want finer control over your workflow:
 
-- [fastly/actions/setup](https://github.com/fastly/actions/blob/master/setup/index.js) - Ensure the Fastly CLI is available
-- [fastly/actions/build](https://github.com/fastly/actions/blob/master/build/index.js) - Build a Compute@Edge project. Equivalent to `fastly compute build`
-- [fastly/actions/deploy](https://github.com/fastly/actions/blob/master/deploy/index.js) - Deploy a Compute@Edge project. Equivalent to `fastly compute deploy`.
+- [fastly/actions/setup](https://github.com/fastly/actions/blob/main/setup/index.js) - Ensure the Fastly CLI is available
+- [fastly/actions/build](https://github.com/fastly/actions/blob/main/build/index.js) - Build a Compute@Edge project. Equivalent to `fastly compute build`
+- [fastly/actions/deploy](https://github.com/fastly/actions/blob/main/deploy/index.js) - Deploy a Compute@Edge project. Equivalent to `fastly compute deploy`.
 
 ```yml
 name: Deploy Application
