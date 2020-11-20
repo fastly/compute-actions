@@ -22,7 +22,7 @@ jobs:
       run: npm install # or cargo install if using Rust
 
     - name: Deploy to Compute@Edge
-      uses: fastly/actions@main
+      uses: fastly/actions@beta
       env:
         FASTLY_API_TOKEN: ${{ secrets.FASTLY_API_TOKEN }}
 ```
@@ -44,16 +44,16 @@ jobs:
     - uses: actions/checkout@v1
 
     - name: Set up Fastly CLI
-      uses: fastly/actions/setup@main
+      uses: fastly/actions/setup@beta
 
     - name: Install Dependencies
       run: npm install
 
     - name: Build Compute@Edge Package
-      uses: fastly/actions/build@main
+      uses: fastly/actions/build@beta
 
     - name: Deploy Compute@Edge Package
-      uses: fastly/actions/deploy@main
+      uses: fastly/actions/deploy@beta
       env:
         FASTLY_API_TOKEN: ${{ secrets.FASTLY_API_TOKEN }}
 ```
