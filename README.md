@@ -1,6 +1,8 @@
 # GitHub Actions for Fastly
 
-This repository contains GitHub actions to help you build on the Fastly platform, such as installing the CLI, building and deploying Compute@Edge services.
+This repository contains GitHub Actions to help you build on the Fastly platform, such as installing the CLI, building and deploying Compute@Edge services.
+
+> **IMPORTANT:** GitHub Actions for Fastly is currently in beta. For more information on what this means, read the [Fastly product and feature lifecycle](https://docs.fastly.com/products/fastly-product-lifecycle#beta) guide.
 
 ## Usage
 
@@ -27,9 +29,9 @@ jobs:
 
 Alternatively, you can manually run the individual Fastly compute actions if you want finer control over your workflow:
 
-- [fastly/actions/setup](https://github.com/fastly/actions/blob/main/setup/index.js) - Ensure the Fastly CLI is available
-- [fastly/actions/build](https://github.com/fastly/actions/blob/main/build/index.js) - Build a Compute@Edge project. Equivalent to `fastly compute build`
-- [fastly/actions/deploy](https://github.com/fastly/actions/blob/main/deploy/index.js) - Deploy a Compute@Edge project. Equivalent to `fastly compute deploy`.
+- [fastly/actions/setup](setup/index.js) - Ensure the Fastly CLI is available
+- [fastly/actions/build](build/index.js) - Build a Compute@Edge project. Equivalent to `fastly compute build`
+- [fastly/actions/deploy](deploy/index.js) - Deploy a Compute@Edge project. Equivalent to `fastly compute deploy`.
 
 ```yml
 name: Deploy Application
