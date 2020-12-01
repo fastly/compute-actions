@@ -1,24 +1,21 @@
-const core = require('@actions/core');
-const exec = require('@actions/exec');
-const tc = require('@actions/tool-cache');
+import core from '@actions/core';
+import tc from '@actions/tool-cache';
+
+import checkCLI from '../util/cli';
 
 // Download URL for latest Fastly CLI release
 const cliVersion = "v0.19.0";
 const downloadURL = `https://github.com/fastly/cli/releases/download/${cliVersion}/fastly_${cliVersion}_linux-amd64.tar.gz`;
 
-checkCLI().then(() => {
-  exec.exec('fastly', 'version');
-}).catch((err) => {
+try {
+  await checkCLI();
+} catch (err) {
+  await downloadCLI();
+}
+
+checkCLI().catch((err) => {
   core.setFailed(err.message);
 });
-
-async function checkCLI() {
-  try {
-    await exec.exec('fastly', 'version')
-  } catch (err) {
-    return await downloadCLI();
-  }
-}
 
 async function downloadCLI() {
   core.info(`Downloading Fastly CLI from ${downloadURL}`);

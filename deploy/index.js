@@ -1,21 +1,25 @@
-const core = require('@actions/core');
-const exec = require('@actions/exec');
-const artifact = require('@actions/artifact');
-const glob = require('@actions/glob');
-const path = require('path');
+import core from '@actions/core';
+import exec from '@actions/exec';
+import artifact from '@actions/artifact';
+import glob from '@actions/glob';
+
+import path from 'path';
+
+import checkCLI from '../util/cli';
 
 const projectDirectory = core.getInput('project_directory');
 
-checkCLI().then(() => {
-  return exec.exec('fastly', ['compute', 'deploy'], {
+checkCLI().then(async () => {
+  const result = await exec.exec('fastly', ['compute', 'deploy'], {
     cwd: projectDirectory
-  }).then(uploadArtifact);
+  });
+  return uploadArtifact(result);
 }).catch((err) => {
   core.setFailed(err.message);
 });
 
 async function uploadArtifact() {
-  const globber = await glob.create(path.join(projectDirectory, 'pkg/*'));
+  const globber = await glob.create(path.join(projectDirectory, 'pkg', '*.tar.gz'));
   const files = await globber.glob();
 
   if (files.length < 1) {
@@ -25,13 +29,5 @@ async function uploadArtifact() {
   const artifactName = path.parse(files[0]).name;
 
   const artifactClient = artifact.create();
-  const uploadResponse = await artifactClient.uploadArtifact(artifactName, files, '.', {});
-}
-
-async function checkCLI() {
-  try {
-    await exec.exec('fastly', 'version')
-  } catch (err) {
-    throw "Fastly CLI is not installed. Use the fastly/compute-actions/setup action to automatically install and cache it.";
-  }
+  await artifactClient.uploadArtifact(artifactName, files, '.', {});
 }
