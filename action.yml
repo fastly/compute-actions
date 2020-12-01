@@ -1,5 +1,9 @@
 name: 'Build and deploy a Compute@Edge project'
+author: Fastly
 description: 'Build and deploy a Compute@Edge package using the Fastly CLI.'
+branding:
+  icon: 'cloud-lightning'
+  color: 'red'
 inputs:
   project_directory:
     description: 'Directory of the project to deploy, relative to the repository root.'
