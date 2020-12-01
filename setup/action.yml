@@ -1,9 +1,11 @@
 name: 'Setup the Fastly CLI for Compute@Edge'
 author: 'Fastly'
 description: 'Downloads and configures the Fastly CLI.'
+
 branding:
   icon: 'settings'
   color: 'red'
+
 runs:
   using: 'node12'
   main: 'index.js'

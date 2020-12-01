@@ -12,11 +12,10 @@ To compile and deploy a Compute@Edge service at the root of the repository. If y
 name: Deploy Application
 on:
   push:
-    branches:
-      - master
+    branches: [master]
 
 jobs:
-  test:
+  deploy:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
@@ -38,10 +37,12 @@ Alternatively, you can manually run the individual Fastly compute actions if you
 
 ```yml
 name: Deploy Application
-on: [push]
+on:
+  push:
+    branches: [master]
 
 jobs:
-  test:
+  deploy:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v1
@@ -60,6 +61,10 @@ jobs:
       env:
         FASTLY_API_TOKEN: ${{ secrets.FASTLY_API_TOKEN }}
 ```
+
+## Security issues
+
+Please see our [SECURITY.md](SECURITY.md) for guidance on reporting security-related issues.
 
 ## License
 
