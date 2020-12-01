@@ -1,5 +1,5 @@
-name: 'Build Compute@Edge Package'
-description: 'Compiles a Compute@Edge program to a binary using the Fastly CLI.'
+name: 'Build a Compute@Edge package'
+description: 'Compiles and packages a Compute@Edge project using the Fastly CLI.'
 runs:
   using: 'node12'
   main: 'index.js'

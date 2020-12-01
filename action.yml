@@ -1,4 +1,4 @@
-name: 'Deploy to Compute@Edge'
+name: 'Build and deploy a Compute@Edge project'
 description: 'Build and deploy a Compute@Edge package using the Fastly CLI.'
 inputs:
   project_directory:

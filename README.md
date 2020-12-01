@@ -1,16 +1,19 @@
 # GitHub Actions for Fastly
 
-This repository contains GitHub Actions to help you build on the Fastly platform, such as installing the CLI, building and deploying Compute@Edge services.
+This repository contains GitHub Actions to help you build on the Fastly platform, such as installing the CLI, and building and deploying Compute@Edge services.
 
 > **IMPORTANT:** GitHub Actions for Fastly is currently in beta. For more information on what this means, read the [Fastly product and feature lifecycle](https://docs.fastly.com/products/fastly-product-lifecycle#beta) guide.
 
 ## Usage
 
-To compile and deploy a Compute@Edge service at the root of the repository. If you used `fastly compute init` to create your project, this will work out of the box:
+To compile and deploy a Compute@Edge service at the root of the repository. If you used `fastly compute init` to initialise your project, this will work out of the box:
 
 ```yml
 name: Deploy Application
-on: [push]
+on:
+  push:
+    branches:
+      - master
 
 jobs:
   test:
@@ -61,11 +64,3 @@ jobs:
 ## License
 
 The source and documentation for this project are released under the [MIT License](LICENSE).
-
-## Metadata
-
-- Team: Developer Relations
-- Slack: #team-developer-relations
-- Engineer: Kailan Blanks
-- Related: https://github.com/fastly/cli
-- Shiply: https://shiply.fastly.com/fastly/actions

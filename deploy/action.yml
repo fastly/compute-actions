@@ -1,5 +1,5 @@
-name: 'Deploy Compute@Edge Package'
-description: 'Deploys the packaged binary to a Compute@Edge service.'
+name: 'Deploy a Compute@Edge package'
+description: 'Deploys a Compute@Edge package using the Fastly CLI.'
 runs:
   using: 'node12'
   main: 'index.js'
