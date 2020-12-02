@@ -1,6 +1,6 @@
-import exec from '@actions/exec';
+const exec = require('@actions/exec');
 
-export default async function checkCLI() {
+module.exports = async function checkCLI() {
   try {
     await exec.exec('fastly', 'version')
   } catch (err) {

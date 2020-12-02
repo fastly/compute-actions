@@ -1,7 +1,7 @@
-import core from '@actions/core';
-import exec from '@actions/exec';
+const core = require('@actions/core');
+const exec = require('@actions/exec');
 
-import checkCLI from '../util/cli';
+const checkCLI = require('../util/cli');
 
 checkCLI().then(() => {
   return exec.exec('fastly', ['compute', 'build'],  {

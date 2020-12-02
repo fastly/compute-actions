@@ -1,11 +1,10 @@
-import core from '@actions/core';
-import exec from '@actions/exec';
-import artifact from '@actions/artifact';
-import glob from '@actions/glob';
+const core = require('@actions/core');
+const exec = require('@actions/exec');
+const artifact = require('@actions/artifact');
+const glob = require('@actions/glob');
+const path = require('path');
 
-import path from 'path';
-
-import checkCLI from '../util/cli';
+const checkCLI = require('../util/cli');
 
 const projectDirectory = core.getInput('project_directory');
 

@@ -1,11 +1,8 @@
-import core from '@actions/core';
-import tc from '@actions/tool-cache';
+const core = require('@actions/core');
+const tc = require('@actions/tool-cache');
+const { Octokit } = require('@octokit/rest');
 
-import checkCLI from '../util/cli';
-
-// Download URL for latest Fastly CLI release
-const cliVersion = "v0.19.0";
-const downloadURL = `https://github.com/fastly/cli/releases/download/${cliVersion}/fastly_${cliVersion}_linux-amd64.tar.gz`;
+const checkCLI = require('../util/cli');
 
 try {
   await checkCLI();
@@ -18,9 +15,28 @@ checkCLI().catch((err) => {
 });
 
 async function downloadCLI() {
-  core.info(`Downloading Fastly CLI from ${downloadURL}`);
+  const cliVersion = core.getInput('cli_version');
+  const octo = new Octokit();
 
-  let cliArchive = await tc.downloadTool(downloadURL);
+  const repo = {
+    owner: 'fastly',
+    repo: 'cli',
+    tag: cliVersion
+  };
+
+  let release = await (cliVersion === 'latest' ? octo.repos.getLatestRelease(repo) : octo.repos.getReleaseByTag(repo));
+
+  let assets = release.data.assets.filter((a) => a.name.endsWith('_linux-amd64.tar.gz'));
+
+  if (!assets.length < 1) {
+    core.setFailed(`Unable to find a suitable binary for release ${release.data.name}`);
+  }
+
+  let asset = assets[0];
+
+  core.info(`Downloading Fastly CLI from ${asset.url}`);
+
+  let cliArchive = await tc.downloadTool(asset.url);
   let cliPath = await tc.extractTar(cliArchive);
 
   const cachedPath = await tc.cacheDir(cliPath, 'fastly', cliVersion);

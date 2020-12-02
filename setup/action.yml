@@ -9,3 +9,9 @@ branding:
 runs:
   using: 'node12'
   main: 'index.js'
+
+inputs:
+  cli_version:
+    description: 'The version of the Fastly CLI to install, e.g. v0.20.0'
+    required: false
+    default: 'latest'
