@@ -30,15 +30,15 @@ async function downloadCLI() {
 
   let assets = release.data.assets.filter((a) => a.name.endsWith('_linux-amd64.tar.gz'));
 
-  if (!assets.length < 1) {
+  if (assets.length < 1) {
     core.setFailed(`Unable to find a suitable binary for release ${release.data.name}`);
   }
 
   let asset = assets[0];
 
-  core.info(`Downloading Fastly CLI from ${asset.url}`);
+  core.info(`Downloading Fastly CLI from ${asset.browser_download_url}`);
 
-  let cliArchive = await tc.downloadTool(asset.url);
+  let cliArchive = await tc.downloadTool(asset.browser_download_url);
   let cliPath = await tc.extractTar(cliArchive);
 
   const cachedPath = await tc.cacheDir(cliPath, 'fastly', cliVersion);
