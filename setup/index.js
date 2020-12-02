@@ -4,15 +4,17 @@ const { Octokit } = require('@octokit/rest');
 
 const checkCLI = require('../util/cli');
 
-try {
-  await checkCLI();
-} catch (err) {
-  await downloadCLI();
-}
+async function setup() {
+  try {
+    await checkCLI();
+  } catch (err) {
+    await downloadCLI();
+  }
 
-checkCLI().catch((err) => {
-  core.setFailed(err.message);
-});
+  checkCLI().catch((err) => {
+    core.setFailed(err.message);
+  });
+}
 
 async function downloadCLI() {
   const cliVersion = core.getInput('cli_version');
@@ -42,3 +44,5 @@ async function downloadCLI() {
   const cachedPath = await tc.cacheDir(cliPath, 'fastly', cliVersion);
   core.addPath(cachedPath);
 }
+
+setup();
