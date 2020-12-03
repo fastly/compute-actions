@@ -8,6 +8,10 @@ This repository contains GitHub Actions to help you build on the Fastly platform
 
 To compile and deploy a Compute@Edge service at the root of the repository. If you used `fastly compute init` to initialise your project, this will work out of the box:
 
+### Rust-based Workflow
+
+You will need to install the correct Rust toolchain for the Fastly action to build your project. The [rust-toolchain](https://github.com/marketplace/actions/rust-toolchain) action can handle this for you with the following configuration:
+
 ```yml
 name: Deploy Application
 on:
@@ -20,14 +24,44 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
-    - name: Install Dependencies
-      run: npm install # or cargo install if using Rust
+    - name: Install Rust toolchain
+      uses: actions-rs/toolchain@v1
+      with:
+          toolchain: 1.46.0 # current Rust toolchain for Compute@Edge
+          target: wasm32-wasi # WebAssembly target
 
     - name: Deploy to Compute@Edge
       uses: fastly/actions@beta
       env:
         FASTLY_API_TOKEN: ${{ secrets.FASTLY_API_TOKEN }}
 ```
+
+### AssemblyScript-based Workflow
+
+GitHub Actions come with a node toolchain pre-installed, so you can just run `npm install` to fetch your project's dependencies.
+
+```yml
+name: Deploy Application
+on:
+  push:
+    branches: [master]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Install project dependencies
+      runs: npm install
+
+    - name: Deploy to Compute@Edge
+      uses: fastly/actions@beta
+      env:
+        FASTLY_API_TOKEN: ${{ secrets.FASTLY_API_TOKEN }}
+```
+
+### Custom Workflows
 
 Alternatively, you can manually run the individual Fastly compute actions if you want finer control over your workflow:
 
