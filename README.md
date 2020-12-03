@@ -84,7 +84,7 @@ jobs:
     - name: Set up Fastly CLI
       uses: fastly/actions/setup@beta
       with:
-        cli_version: '0.20.0' # defaults to 'latest'
+        cli_version: '0.20.0' # optional, defaults to 'latest'
 
     - name: Install Dependencies
       run: npm install
@@ -94,6 +94,8 @@ jobs:
 
     - name: Deploy Compute@Edge Package
       uses: fastly/actions/deploy@beta
+      with:
+        service_id: '4tYGx...' # optional, defaults to value in fastly.toml
       env:
         FASTLY_API_TOKEN: ${{ secrets.FASTLY_API_TOKEN }}
 ```

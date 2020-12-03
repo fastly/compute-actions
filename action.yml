@@ -15,6 +15,10 @@ inputs:
     description: 'The version of the Fastly CLI to install, e.g. v0.20.0'
     required: false
     default: 'latest'
+  service_id:
+    description: 'The Fastly service ID to deploy to. Defaults to the value in fastly.toml'
+    required: false
+    default: 'default'
 
 runs:
   using: node12

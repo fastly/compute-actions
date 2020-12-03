@@ -15,3 +15,7 @@ inputs:
     description: 'Directory of the project to build, relative to the repository root.'
     required: false
     default: './'
+  service_id:
+    description: 'The Fastly service ID to deploy to. Defaults to the value in fastly.toml'
+    required: false
+    default: 'default'

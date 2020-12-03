@@ -7,9 +7,12 @@ const path = require('path');
 const checkCLI = require('../util/cli');
 
 const projectDirectory = core.getInput('project_directory');
+const serviceId = core.getInput('service_id');
 
 checkCLI().then(async () => {
-  const result = await exec.exec('fastly', ['compute', 'deploy'], {
+  let params = ['compute', 'deploy'];
+  if (serviceId !== 'default') params.push(['--service-id', serviceId]);
+  const result = await exec.exec('fastly', params, {
     cwd: projectDirectory
   });
   return uploadArtifact(result);
