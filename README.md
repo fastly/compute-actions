@@ -38,7 +38,7 @@ jobs:
 
 ### AssemblyScript-based Workflow
 
-GitHub Actions come with a node toolchain pre-installed, so you can just run `npm install` to fetch your project's dependencies.
+GitHub Action runners come with a node toolchain pre-installed, so you can just run `npm install` to fetch your project's dependencies.
 
 ```yml
 name: Deploy Application
@@ -65,9 +65,9 @@ jobs:
 
 Alternatively, you can manually run the individual Fastly compute actions if you want finer control over your workflow:
 
-- [fastly/actions/setup](setup/index.js) - Ensure the Fastly CLI is available
+- [fastly/actions/setup](setup/index.js) - Download the Fastly CLI if not already installed
 - [fastly/actions/build](build/index.js) - Build a Compute@Edge project. Equivalent to `fastly compute build`
-- [fastly/actions/deploy](deploy/index.js) - Deploy a Compute@Edge project. Equivalent to `fastly compute deploy`.
+- [fastly/actions/deploy](deploy/index.js) - Deploy a Compute@Edge project. Equivalent to `fastly compute deploy`
 
 ```yml
 name: Deploy Application
@@ -83,6 +83,8 @@ jobs:
 
     - name: Set up Fastly CLI
       uses: fastly/actions/setup@beta
+      with:
+        cli_version: '0.20.0' # defaults to 'latest'
 
     - name: Install Dependencies
       run: npm install
