@@ -22,7 +22,7 @@ async function downloadCLI() {
 
   if (cliVersion !== 'latest') {
     const valid = semver.valid(cliVersion);
-    if (valid == null) {
+    if (!valid) {
       core.setFailed(`The provided cli_version (${cliVersion}) is not a valid SemVer string.`);
       return;
     }
@@ -48,7 +48,7 @@ async function downloadCLI() {
   try {
     release = await (cliVersion === 'latest' ? octo.repos.getLatestRelease(repo) : octo.repos.getReleaseByTag(repo));
   } catch (err) {
-    core.setFailed(`Unable to fetch the requested release: ${err.message}`);
+    core.setFailed(`Unable to fetch the requested release (${cliVersion}): ${err.message}`);
   }
 
   let asset = release.data.assets.find((a) => a.name.endsWith('_linux-amd64.tar.gz'));
@@ -58,7 +58,7 @@ async function downloadCLI() {
     return;
   }
 
-  core.info(`Downloading Fastly CLI from ${asset.browser_download_url}`);
+  core.info(`Downloading Fastly CLI (${cliVersion}) from ${asset.browser_download_url}`);
 
   let cliArchive = await tc.downloadTool(asset.browser_download_url);
   let cliPath = await tc.extractTar(cliArchive);
