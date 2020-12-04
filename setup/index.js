@@ -28,13 +28,12 @@ async function downloadCLI() {
 
   let release = await (cliVersion === 'latest' ? octo.repos.getLatestRelease(repo) : octo.repos.getReleaseByTag(repo));
 
-  let assets = release.data.assets.filter((a) => a.name.endsWith('_linux-amd64.tar.gz'));
+  let asset = release.data.assets.find((a) => a.name.endsWith('_linux-amd64.tar.gz'));
 
-  if (assets.length < 1) {
+  if (!asset) {
     core.setFailed(`Unable to find a suitable binary for release ${release.data.name}`);
   }
 
-  let asset = assets[0];
 
   core.info(`Downloading Fastly CLI from ${asset.browser_download_url}`);
 
