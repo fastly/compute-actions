@@ -30,6 +30,13 @@ async function downloadCLI() {
     cliVersion = `v${valid}`;
   }
 
+  const existingVersion = tc.find('fastly', cliVersion);
+
+  if (existingVersion) {
+    core.addPath(existingVersion);
+    return;
+  }
+
   const octo = new Octokit();
   const repo = {
     owner: 'fastly',
