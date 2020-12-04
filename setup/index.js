@@ -1,6 +1,7 @@
 const core = require('@actions/core');
 const tc = require('@actions/tool-cache');
 const { Octokit } = require('@octokit/rest');
+const semver = require('semver');
 
 const checkCLI = require('../util/cli');
 
@@ -17,23 +18,38 @@ async function setup() {
 }
 
 async function downloadCLI() {
-  const cliVersion = core.getInput('cli_version');
-  const octo = new Octokit();
+  let cliVersion = core.getInput('cli_version');
 
+  if (cliVersion !== 'latest') {
+    const valid = semver.valid(cliVersion);
+    if (valid == null) {
+      core.setFailed(`The provided cli_version (${cliVersion}) is not a valid SemVer string.`);
+      return;
+    }
+
+    cliVersion = `v${valid}`;
+  }
+
+  const octo = new Octokit();
   const repo = {
     owner: 'fastly',
     repo: 'cli',
     tag: cliVersion
   };
 
-  let release = await (cliVersion === 'latest' ? octo.repos.getLatestRelease(repo) : octo.repos.getReleaseByTag(repo));
+  let release;
+  try {
+    release = await (cliVersion === 'latest' ? octo.repos.getLatestRelease(repo) : octo.repos.getReleaseByTag(repo));
+  } catch (err) {
+    core.setFailed(`Unable to fetch the requested release: ${err.message}`);
+  }
 
   let asset = release.data.assets.find((a) => a.name.endsWith('_linux-amd64.tar.gz'));
 
   if (!asset) {
     core.setFailed(`Unable to find a suitable binary for release ${release.data.name}`);
+    return;
   }
-
 
   core.info(`Downloading Fastly CLI from ${asset.browser_download_url}`);
 
