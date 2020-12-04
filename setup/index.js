@@ -20,6 +20,7 @@ async function setup() {
 async function downloadCLI() {
   let cliVersion = core.getInput('cli_version');
 
+  // Normalize version string
   if (cliVersion !== 'latest') {
     const valid = semver.valid(cliVersion);
     if (!valid) {
@@ -30,13 +31,14 @@ async function downloadCLI() {
     cliVersion = `v${valid}`;
   }
 
-  const existingVersion = tc.find('fastly', cliVersion);
-
+  // Check to see if requested version is cached
+  let existingVersion = tc.find('fastly', cliVersion);
   if (existingVersion) {
     core.addPath(existingVersion);
     return;
   }
 
+  // Fetch requested release from fastly/cli repo
   const octo = new Octokit();
   const repo = {
     owner: 'fastly',
@@ -51,6 +53,16 @@ async function downloadCLI() {
     core.setFailed(`Unable to fetch the requested release (${cliVersion}): ${err.message}`);
   }
 
+  // If requested version is 'latest', return latest version from cache if available
+  if (cliVersion === 'latest') {
+    let existingVersion = tc.find('fastly', release.data.name);
+    if (existingVersion) {
+      core.addPath(existingVersion);
+      return;
+    }
+  }
+
+  // Download requested version
   let asset = release.data.assets.find((a) => a.name.endsWith('_linux-amd64.tar.gz'));
 
   if (!asset) {
@@ -58,12 +70,13 @@ async function downloadCLI() {
     return;
   }
 
-  core.info(`Downloading Fastly CLI (${cliVersion}) from ${asset.browser_download_url}`);
+  core.info(`Downloading Fastly CLI (${release.data.name}) from ${asset.browser_download_url}`);
 
+  // Cache downloaded binary
   let cliArchive = await tc.downloadTool(asset.browser_download_url);
   let cliPath = await tc.extractTar(cliArchive);
 
-  const cachedPath = await tc.cacheDir(cliPath, 'fastly', cliVersion);
+  const cachedPath = await tc.cacheDir(cliPath, 'fastly', release.data.name);
   core.addPath(cachedPath);
 }
 
