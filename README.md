@@ -1,16 +1,16 @@
-# GitHub Actions for Fastly
+# GitHub Actions for Compute@Edge
 
-This repository contains GitHub Actions to help you build on the Fastly platform, such as installing the CLI, and building and deploying Compute@Edge services.
+This repository contains GitHub Actions to help you build on Fastly's Compute@Edge platform, such as installing the CLI, and building and deploying services.
 
-> **IMPORTANT:** GitHub Actions for Fastly is currently in beta. For more information on what this means, read the [Fastly product and feature lifecycle](https://docs.fastly.com/products/fastly-product-lifecycle#beta) guide.
+> **IMPORTANT:** GitHub Actions for Compute@Edge is currently in beta. For more information on what this means, read the [Fastly product and feature lifecycle](https://docs.fastly.com/products/fastly-product-lifecycle#beta) guide.
 
 ## Usage
 
-To compile and deploy a Compute@Edge service at the root of the repository. If you used `fastly compute init` to initialise your project, this will work out of the box:
+To compile and deploy a Compute@Edge service at the root of the repository, you can use the `fastly/compute-actions` main action. This will install the Fastly CLI, build your project, and deploy it to your Fastly service. If you used `fastly compute init` to initialise your project, this will work out of the box:
 
 ### Rust-based Workflow
 
-You will need to install the correct Rust toolchain for the Fastly action to build your project. The [rust-toolchain](https://github.com/marketplace/actions/rust-toolchain) action can handle this for you with the following configuration:
+You will need to install the correct Rust toolchain for the action to build your project. The [rust-toolchain](https://github.com/marketplace/actions/rust-toolchain) action can handle this for you with the following configuration:
 
 ```yml
 name: Deploy Application
@@ -31,7 +31,7 @@ jobs:
           target: wasm32-wasi # WebAssembly target
 
     - name: Deploy to Compute@Edge
-      uses: fastly/actions@beta
+      uses: fastly/compute-actions@beta
       env:
         FASTLY_API_TOKEN: ${{ secrets.FASTLY_API_TOKEN }}
 ```
@@ -56,18 +56,18 @@ jobs:
       runs: npm install
 
     - name: Deploy to Compute@Edge
-      uses: fastly/actions@beta
+      uses: fastly/compute-actions@beta
       env:
         FASTLY_API_TOKEN: ${{ secrets.FASTLY_API_TOKEN }}
 ```
 
 ### Custom Workflows
 
-Alternatively, you can manually run the individual Fastly compute actions if you want finer control over your workflow:
+Alternatively, you can manually run the individual GitHub Actions for Compute@Edge if you want finer control over your workflow:
 
-- [fastly/actions/setup](setup/index.js) - Download the Fastly CLI if not already installed
-- [fastly/actions/build](build/index.js) - Build a Compute@Edge project. Equivalent to `fastly compute build`
-- [fastly/actions/deploy](deploy/index.js) - Deploy a Compute@Edge project. Equivalent to `fastly compute deploy`
+- [fastly/compute-actions/setup](setup/index.js) - Download the Fastly CLI if not already installed
+- [fastly/compute-actions/build](build/index.js) - Build a Compute@Edge project. Equivalent to `fastly compute build`
+- [fastly/compute-actions/deploy](deploy/index.js) - Deploy a Compute@Edge project. Equivalent to `fastly compute deploy`
 
 ```yml
 name: Deploy Application
@@ -82,7 +82,7 @@ jobs:
     - uses: actions/checkout@v1
 
     - name: Set up Fastly CLI
-      uses: fastly/actions/setup@beta
+      uses: fastly/compute-actions/setup@beta
       with:
         cli_version: '0.20.0' # optional, defaults to 'latest'
 
@@ -90,10 +90,10 @@ jobs:
       run: npm install
 
     - name: Build Compute@Edge Package
-      uses: fastly/actions/build@beta
+      uses: fastly/compute-actions/build@beta
 
     - name: Deploy Compute@Edge Package
-      uses: fastly/actions/deploy@beta
+      uses: fastly/compute-actions/deploy@beta
       with:
         service_id: '4tYGx...' # optional, defaults to value in fastly.toml
       env:

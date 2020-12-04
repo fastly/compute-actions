@@ -1,11 +1,11 @@
 {
-  "name": "actions",
+  "name": "@fastly/compute-actions",
   "version": "0.1.0",
   "description": "GitHub Actions for building on the Fastly platform.",
   "main": "index.js",
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com/fastly/actions.git"
+    "url": "git+ssh://git@github.com/fastly/compute-actions.git"
   },
   "author": "Fastly <oss@fastly.com>",
   "contributors": [
@@ -13,9 +13,9 @@
   ],
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/fastly/actions/issues"
+    "url": "https://github.com/fastly/compute-actions/issues"
   },
-  "homepage": "https://github.com/fastly/actions#readme",
+  "homepage": "https://github.com/fastly/compute-actions#readme",
   "dependencies": {
     "@actions/artifact": "^0.4.0",
     "@actions/core": "^1.2.6",
