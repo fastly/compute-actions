@@ -1,0 +1,17 @@
+name: 'Build a Compute@Edge package'
+author: 'Fastly'
+description: 'Compiles and packages a Compute@Edge project using the Fastly CLI.'
+
+branding:
+  icon: 'layers'
+  color: 'red'
+
+runs:
+  using: 'node12'
+  main: 'index.js'
+
+inputs:
+  project_directory:
+    description: 'Directory of the project to build, relative to the repository root.'
+    required: false
+    default: './'

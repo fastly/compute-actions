@@ -1,0 +1,21 @@
+name: 'Deploy a Compute@Edge package'
+author: 'Fastly'
+description: 'Deploys a Compute@Edge package using the Fastly CLI.'
+
+branding:
+  icon: 'upload-cloud'
+  color: 'red'
+
+runs:
+  using: 'node12'
+  main: 'index.js'
+
+inputs:
+  project_directory:
+    description: 'Directory of the project to build, relative to the repository root.'
+    required: false
+    default: './'
+  service_id:
+    description: 'The Fastly service ID to deploy to. Defaults to the value in fastly.toml'
+    required: false
+    default: 'default'
