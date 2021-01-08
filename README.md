@@ -2,7 +2,7 @@
 
 This repository contains GitHub Actions to help you build on Fastly's Compute@Edge platform, such as installing the CLI, and building and deploying services.
 
-> **IMPORTANT:** GitHub Actions for Compute@Edge is currently in beta. For more information on what this means, read the [Fastly product and feature lifecycle](https://docs.fastly.com/products/fastly-product-lifecycle#beta) guide.
+> **IMPORTANT:** Compute@Edge is currently in limited availability. For more information on what this means, read the [Fastly product and feature lifecycle](https://docs.fastly.com/products/fastly-product-lifecycle#limited-availability) guide.
 
 ## Usage
 
