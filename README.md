@@ -53,7 +53,7 @@ jobs:
     - uses: actions/checkout@v2
 
     - name: Install project dependencies
-      runs: npm install
+      run: npm install
 
     - name: Deploy to Compute@Edge
       uses: fastly/compute-actions@beta
