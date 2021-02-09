@@ -27,7 +27,7 @@ jobs:
     - name: Install Rust toolchain
       uses: actions-rs/toolchain@v1
       with:
-          toolchain: 1.46.0 # current Rust toolchain for Compute@Edge
+          toolchain: 1.49.0 # current Rust toolchain for Compute@Edge
           target: wasm32-wasi # WebAssembly target
 
     - name: Deploy to Compute@Edge
@@ -84,7 +84,7 @@ jobs:
     - name: Set up Fastly CLI
       uses: fastly/compute-actions/setup@beta
       with:
-        cli_version: '0.20.0' # optional, defaults to 'latest'
+        cli_version: '0.24.1' # optional, defaults to 'latest'
 
     - name: Install Dependencies
       run: npm install
