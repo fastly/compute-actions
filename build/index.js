@@ -4,7 +4,7 @@ const exec = require('@actions/exec');
 const checkCLI = require('../util/cli');
 
 checkCLI().then(() => {
-  return exec.exec('fastly', ['compute', 'build'],  {
+  return exec.exec('fastly', ['compute', 'build', '-v'],  {
     cwd: core.getInput('project_directory')
   });
 }).catch((err) => {
