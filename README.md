@@ -8,7 +8,7 @@ This repository contains GitHub Actions to help you build on Fastly's Compute@Ed
 
 To compile and deploy a Compute@Edge service at the root of the repository, you can use the `fastly/compute-actions` main action. This will install the Fastly CLI, build your project, and deploy it to your Fastly service. If you used `fastly compute init` to initialise your project, this will work out of the box:
 
-### Rust-based Workflow
+### Cargo-based Workflow (Rust)
 
 You will need to install the correct Rust toolchain for the action to build your project. The [rust-toolchain](https://github.com/marketplace/actions/rust-toolchain) action can handle this for you with the following configuration:
 
@@ -36,7 +36,7 @@ jobs:
         FASTLY_API_TOKEN: ${{ secrets.FASTLY_API_TOKEN }}
 ```
 
-### AssemblyScript-based Workflow
+### npm-based Workflow (JavaScript + AssemblyScript)
 
 GitHub Action runners come with a node toolchain pre-installed, so you can just run `npm install` to fetch your project's dependencies.
 
