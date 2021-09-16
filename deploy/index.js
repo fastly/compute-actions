@@ -10,7 +10,7 @@ const projectDirectory = core.getInput('project_directory');
 const serviceId = core.getInput('service_id');
 
 checkCLI().then(async () => {
-  let params = ['compute', 'deploy', '-v'];
+  let params = ['compute', 'deploy'];
   if (serviceId !== 'default') params.push(['--service-id=' + serviceId]);
   const result = await exec.exec('fastly', params, {
     cwd: projectDirectory
