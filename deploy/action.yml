@@ -22,3 +22,4 @@ inputs:
   comment:
     description: 'An optional comment to be included with the deploy.'
     required: false
+    default: ''
