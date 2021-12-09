@@ -7,7 +7,7 @@ const skip_verification = core.getBooleanInput('skip_verification');
 
 checkCLI().then(() => {
   let params = ['compute', 'build', '-v'];
-  if (skip_verification) params.push(['--skip-verification']);
+  if (skip_verification) params.push('--skip-verification');
   return exec.exec('fastly', params,  {
     cwd: core.getInput('project_directory')
   });
