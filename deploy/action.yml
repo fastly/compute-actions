@@ -19,3 +19,6 @@ inputs:
     description: 'The Fastly service ID to deploy to. Defaults to the value in fastly.toml'
     required: false
     default: 'default'
+  comment:
+    description: 'An optional comment to be included with the deploy.'
+    required: false
