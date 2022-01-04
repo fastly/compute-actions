@@ -15,7 +15,3 @@ inputs:
     description: 'Directory of the project to build, relative to the repository root.'
     required: false
     default: './'
-  skip_verification:
-    description: 'Skip verification steps and force build.'
-    required: false
-    default: false
