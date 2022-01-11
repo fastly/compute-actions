@@ -8,10 +8,15 @@ const checkCLI = require('../util/cli');
 
 const projectDirectory = core.getInput('project_directory');
 const serviceId = core.getInput('service_id');
+const comment = core.getInput('comment');
+const verbose = core.getBooleanInput('verbose');
 
 checkCLI().then(async () => {
-  let params = ['compute', 'deploy', '-v'];
-  if (serviceId !== 'default') params.push(['--service-id=' + serviceId]);
+  let params = ['compute', 'deploy'];
+  if (serviceId !== 'default') params.push('--service-id=' + serviceId);
+  if (verbose) params.push('--verbose');
+  if (comment) params.push('--comment=' + comment);
+
   const result = await exec.exec('fastly', params, {
     cwd: projectDirectory
   });
