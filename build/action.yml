@@ -15,6 +15,10 @@ inputs:
     description: 'Directory of the project to build, relative to the repository root.'
     required: false
     default: './'
+  verbose:
+    description: 'Set to true to enable verbose logging'
+    required: false
+    default: 'false'
   skip_verification:
     description: 'Skip verification steps and force build.'
     required: false

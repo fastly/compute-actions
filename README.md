@@ -92,6 +92,7 @@ jobs:
     - name: Build Compute@Edge Package
       uses: fastly/compute-actions/build@main
       with:
+        verbose: true # optionally enables verbose output, defaults to false
         skip_verification: true # optional, defaults to false
 
     - name: Deploy Compute@Edge Package
