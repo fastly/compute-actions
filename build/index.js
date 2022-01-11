@@ -7,7 +7,7 @@ const verbose = core.getBooleanInput('verbose');
 const skipVerification = core.getBooleanInput('skip_verification');
 
 checkCLI().then(() => {
-  let params = ['compute', 'build', '-v'];
+  let params = ['compute', 'build'];
   if (skipVerification) params.push('--skip-verification');
   if (verbose) params.push('--verbose');
 
