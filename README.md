@@ -91,11 +91,14 @@ jobs:
 
     - name: Build Compute@Edge Package
       uses: fastly/compute-actions/build@main
+      with:
+        skip_verification: true # optional, defaults to false
 
     - name: Deploy Compute@Edge Package
       uses: fastly/compute-actions/deploy@main
       with:
         service_id: '4tYGx...' # optional, defaults to value in fastly.toml
+        comment: 'Deployed via GitHub Actions' # optional
       env:
         FASTLY_API_TOKEN: ${{ secrets.FASTLY_API_TOKEN }}
 ```
