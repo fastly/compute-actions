@@ -23,3 +23,7 @@ inputs:
     description: 'Set to true to enable verbose logging'
     required: false
     default: false
+  comment:
+    description: 'An optional comment to be included with the deployed service version.'
+    required: false
+    default: ''

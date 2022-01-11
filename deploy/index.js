@@ -14,6 +14,8 @@ checkCLI().then(async () => {
   let params = ['compute', 'deploy'];
   if (serviceId !== 'default') params.push('--service-id=' + serviceId);
   if (verbose) params.push('--verbose');
+  if (comment) params.push('--comment=' + comment);
+
   const result = await exec.exec('fastly', params, {
     cwd: projectDirectory
   });
