@@ -12,7 +12,7 @@ const comment = core.getInput('comment');
 const verbose = core.getBooleanInput('verbose');
 
 checkCLI().then(async () => {
-  let params = ['compute', 'deploy'];
+  let params = ['compute', 'deploy', '--token', process.env['FASTLY_API_TOKEN']];
   if (serviceId !== 'default') params.push('--service-id=' + serviceId);
   if (verbose) params.push('--verbose');
   if (comment) params.push('--comment=' + comment);
