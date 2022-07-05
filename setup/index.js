@@ -2,6 +2,7 @@ const core = require('@actions/core');
 const tc = require('@actions/tool-cache');
 const { Octokit } = require('@octokit/rest');
 const semver = require('semver');
+const { arch, platform } = require('node:process');
 
 const checkCLI = require('../util/cli');
 
@@ -62,8 +63,12 @@ async function downloadCLI() {
     }
   }
 
+  let os = platform;
+  if (os === 'win32') {
+    os = 'windows';
+  }
   // Download requested version
-  let asset = release.data.assets.find((a) => a.name.endsWith('_linux-amd64.tar.gz'));
+  let asset = release.data.assets.find((a) => a.name.endsWith(`_${os}-amd64.tar.gz`));
 
   if (!asset) {
     core.setFailed(`Unable to find a suitable binary for release ${release.data.name}`);
