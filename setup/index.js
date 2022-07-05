@@ -1,8 +1,9 @@
 const core = require('@actions/core');
 const tc = require('@actions/tool-cache');
 const { Octokit } = require('@octokit/rest');
+const {createActionAuth} = require('@octokit/auth-action');
 const semver = require('semver');
-const { arch, platform } = require('node:process');
+const { platform } = require('process');
 
 const checkCLI = require('../util/cli');
 
@@ -40,7 +41,7 @@ async function downloadCLI() {
   }
 
   // Fetch requested release from fastly/cli repo
-  const octo = new Octokit();
+  const octo = new Octokit({authStrategy: createActionAuth});
   const repo = {
     owner: 'fastly',
     repo: 'cli',
