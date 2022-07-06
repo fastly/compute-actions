@@ -85,6 +85,7 @@ jobs:
       uses: fastly/compute-actions/setup@v2
       with:
         cli_version: '0.36.0' # optional, defaults to 'latest'
+        token: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Install Dependencies
       run: npm install
