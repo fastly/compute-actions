@@ -31,6 +31,10 @@ inputs:
     description: 'Skip verification steps before build.'
     required: false
     default: 'false'
+  token:
+    description: 'The GitHub token to use when interacting with the GitHub API'
+    required: false
+    default: 'false'
 
 runs:
   using: node12
