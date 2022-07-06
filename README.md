@@ -31,7 +31,7 @@ jobs:
           target: wasm32-wasi # WebAssembly target
 
     - name: Deploy to Compute@Edge
-      uses: fastly/compute-actions@main
+      uses: fastly/compute-actions@v2
       env:
         FASTLY_API_TOKEN: ${{ secrets.FASTLY_API_TOKEN }}
 ```
@@ -56,7 +56,7 @@ jobs:
       run: npm install
 
     - name: Deploy to Compute@Edge
-      uses: fastly/compute-actions@main
+      uses: fastly/compute-actions@v2
       env:
         FASTLY_API_TOKEN: ${{ secrets.FASTLY_API_TOKEN }}
 ```
@@ -82,7 +82,7 @@ jobs:
     - uses: actions/checkout@v1
 
     - name: Set up Fastly CLI
-      uses: fastly/compute-actions/setup@main
+      uses: fastly/compute-actions/setup@v2
       with:
         cli_version: '0.36.0' # optional, defaults to 'latest'
 
@@ -90,13 +90,13 @@ jobs:
       run: npm install
 
     - name: Build Compute@Edge Package
-      uses: fastly/compute-actions/build@main
+      uses: fastly/compute-actions/build@v2
       with:
         verbose: true # optionally enables verbose output, defaults to false
         skip_verification: true # optional, defaults to false
 
     - name: Deploy Compute@Edge Package
-      uses: fastly/compute-actions/deploy@main
+      uses: fastly/compute-actions/deploy@v2
       with:
         service_id: '4tYGx...' # optional, defaults to value in fastly.toml
         comment: 'Deployed via GitHub Actions' # optional
