@@ -65,11 +65,12 @@ async function downloadCLI() {
   }
 
   let os = platform;
+  let nameSuffix = `_${os}-amd64.tar.gz`;
   if (os === 'win32') {
-    os = 'windows';
+    nameSuffix = '_windows-amd64.zip';
   }
   // Download requested version
-  let asset = release.data.assets.find((a) => a.name.endsWith(`_${os}-amd64.tar.gz`));
+  let asset = release.data.assets.find((a) => a.name.endsWith(nameSuffix));
 
   if (!asset) {
     core.setFailed(`Unable to find a suitable binary for release ${release.data.name}`);
@@ -80,8 +81,12 @@ async function downloadCLI() {
 
   // Cache downloaded binary
   let cliArchive = await tc.downloadTool(asset.browser_download_url);
-  let cliPath = await tc.extractTar(cliArchive);
-
+  let cliPath;
+  if (asset.name.endsWith('.zip')) {
+    cliPath = await tc.extractZip(cliArchive);
+  } else {
+    cliPath = await tc.extractTar(cliArchive);
+  }
   const cachedPath = await tc.cacheDir(cliPath, 'fastly', release.data.name);
   core.addPath(cachedPath);
 }
