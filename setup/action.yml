@@ -15,3 +15,7 @@ inputs:
     description: 'The version of the Fastly CLI to install, e.g. v0.20.0'
     required: false
     default: 'latest'
+  token:
+    description: 'The GitHub token to use when interacting with the GitHub API'
+    required: false
+    default: 'false'
