@@ -41,7 +41,7 @@ async function downloadCLI() {
   }
 
   // Fetch requested release from fastly/cli repo
-  const octo = new Octokit({authStrategy: createActionAuth});
+  const octo = core.getInput('token') ? new Octokit({authStrategy: createActionAuth}) : new Octokit();
   const repo = {
     owner: 'fastly',
     repo: 'cli',
