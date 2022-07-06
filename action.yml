@@ -34,7 +34,6 @@ inputs:
   token:
     description: 'The GitHub token to use when interacting with the GitHub API'
     required: false
-    default: 'false'
 
 runs:
   using: node12
