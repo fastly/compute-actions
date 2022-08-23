@@ -8,12 +8,14 @@ const checkCLI = require('../util/cli');
 
 const projectDirectory = core.getInput('project_directory');
 const serviceId = core.getInput('service_id');
+const serviceName = core.getInput('service_name');
 const comment = core.getInput('comment');
 const verbose = core.getBooleanInput('verbose');
 
 checkCLI().then(async () => {
   let params = ['compute', 'deploy'];
   if (serviceId !== 'default') params.push('--service-id=' + serviceId);
+  if (serviceId === 'default' && serviceName !== 'default') params.push('--service-name=' + serviceName);
   if (verbose) params.push('--verbose');
   if (comment) params.push('--comment=' + comment);
 
