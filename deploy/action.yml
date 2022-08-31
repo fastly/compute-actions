@@ -19,6 +19,10 @@ inputs:
     description: 'The Fastly service ID to deploy to. Defaults to the value in fastly.toml'
     required: false
     default: 'default'
+  version:
+    description: 'Version of the deployed version to clone from (--version=active to clone active version)'
+    required: false
+    default: ''
   verbose:
     description: 'Set to true to enable verbose logging'
     required: false
