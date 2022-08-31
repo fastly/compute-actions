@@ -23,6 +23,10 @@ inputs:
     description: 'An optional comment to be included with the deployed service version.'
     required: false
     default: ''
+  version:
+    description: 'Version to clone from, if deploying. Can be "latest", "active", or the number of a specific version'
+    required: false
+    default: ''
   verbose:
     description: 'Set to true to enable verbose logging'
     required: false
