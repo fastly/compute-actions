@@ -20,7 +20,7 @@ inputs:
     required: false
     default: 'default'
   version:
-    description: 'Version of the deployed version to clone from (--version=active to clone active version)'
+    description: 'Version to clone from. Can be "latest", "active", or the number of a specific version'
     required: false
     default: ''
   verbose:
