@@ -10,12 +10,14 @@ const projectDirectory = core.getInput('project_directory');
 const serviceId = core.getInput('service_id');
 const comment = core.getInput('comment');
 const verbose = core.getBooleanInput('verbose');
+const version = core.getInput('version');
 
 checkCLI().then(async () => {
   let params = ['compute', 'deploy'];
   if (serviceId !== 'default') params.push('--service-id=' + serviceId);
   if (verbose) params.push('--verbose');
   if (comment) params.push('--comment=' + comment);
+  if (version) params.push('--version=' + version);
 
   const result = await exec.exec('fastly', params, {
     cwd: projectDirectory
