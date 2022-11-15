@@ -95,6 +95,7 @@ jobs:
       with:
         verbose: true # optionally enables verbose output, defaults to false
         skip_verification: true # optional, defaults to false
+        non_interactive: true # optional, defaults to false
 
     - name: Deploy Compute@Edge Package
       uses: fastly/compute-actions/deploy@v2

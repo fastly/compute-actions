@@ -23,3 +23,7 @@ inputs:
     description: 'Skip verification steps and force build.'
     required: false
     default: 'false'
+  non_interactive:
+    description: 'Do not prompt for user input. Accept default options for all interactive prompts, and answer yes automatically to all Yes/No confirmations.'
+    required: false
+    default: 'false'

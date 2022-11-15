@@ -38,6 +38,10 @@ inputs:
   token:
     description: 'The GitHub token to use when interacting with the GitHub API'
     required: false
+  non_interactive:
+    description: 'Do not prompt for user input. Accept default options for all interactive prompts, and answer yes automatically to all Yes/No confirmations.'
+    required: false
+    default: 'false'
 
 runs:
   using: node12
