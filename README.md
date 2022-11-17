@@ -22,7 +22,7 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
 
     - name: Install Rust toolchain
       uses: actions-rs/toolchain@v1
@@ -31,7 +31,7 @@ jobs:
           target: wasm32-wasi # WebAssembly target
 
     - name: Deploy to Compute@Edge
-      uses: fastly/compute-actions@v2
+      uses: fastly/compute-actions@v4
       env:
         FASTLY_API_TOKEN: ${{ secrets.FASTLY_API_TOKEN }}
 ```
@@ -50,13 +50,13 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
 
     - name: Install project dependencies
       run: npm install
 
     - name: Deploy to Compute@Edge
-      uses: fastly/compute-actions@v2
+      uses: fastly/compute-actions@v4
       env:
         FASTLY_API_TOKEN: ${{ secrets.FASTLY_API_TOKEN }}
 ```
@@ -79,25 +79,25 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v1
+    - uses: actions/checkout@v3
 
     - name: Set up Fastly CLI
-      uses: fastly/compute-actions/setup@v2
+      uses: fastly/compute-actions/setup@v4
       with:
-        cli_version: '0.36.0' # optional, defaults to 'latest'
+        cli_version: '4.3.0' # optional, defaults to 'latest'
         token: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Install Dependencies
       run: npm install
 
     - name: Build Compute@Edge Package
-      uses: fastly/compute-actions/build@v2
+      uses: fastly/compute-actions/build@v4
       with:
         verbose: true # optionally enables verbose output, defaults to false
         skip_verification: true # optional, defaults to false
 
     - name: Deploy Compute@Edge Package
-      uses: fastly/compute-actions/deploy@v2
+      uses: fastly/compute-actions/deploy@v4
       with:
         service_id: '4tYGx...' # optional, defaults to value in fastly.toml
         comment: 'Deployed via GitHub Actions' # optional
