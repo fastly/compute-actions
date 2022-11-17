@@ -105,6 +105,19 @@ jobs:
         FASTLY_API_TOKEN: ${{ secrets.FASTLY_API_TOKEN }}
 ```
 
+### Inputs
+
+The following inputs can be used as `with` keys for the actions in this repository; none of them are required:
+
+* `project_directory` - Directory of the project to deploy, relative to the repository root.
+* `cli_version` - The version of the Fastly CLI to install, e.g. v0.20.0
+* `service_id` - The Fastly service ID to deploy to. Defaults to the value in `fastly.toml`. (deploy only)
+* `comment` - An optional comment to be included with the deployed service version. (deploy only)
+* `version` - Version to clone from when deploying. Can be "latest", "active", or the number of a specific version. (deploy only)
+* `verbose` - Set to true to enable verbose logging.
+* `skip_verification` - Skip verification steps before build. (build only)
+* `token` - The GitHub token to use when interacting with the GitHub API.
+
 ## Security issues
 
 Please see our [SECURITY.md](SECURITY.md) for guidance on reporting security-related issues.
