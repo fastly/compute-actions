@@ -13,7 +13,7 @@ const verbose = core.getBooleanInput('verbose');
 const version = core.getInput('version');
 
 checkCLI().then(async () => {
-  let params = ['compute', 'deploy'];
+  let params = ['compute', 'deploy', '--non-interactive'];
   if (serviceId !== 'default') params.push('--service-id=' + serviceId);
   if (verbose) params.push('--verbose');
   if (comment) params.push('--comment=' + comment);
