@@ -2,8 +2,6 @@
 
 This repository contains GitHub Actions to help you build on Fastly's Compute@Edge platform, such as installing the CLI, and building and deploying services.
 
-> **IMPORTANT:** Compute@Edge is currently in limited availability. For more information on what this means, read the [Fastly product and feature lifecycle](https://docs.fastly.com/products/fastly-product-lifecycle#limited-availability) guide.
-
 ## Usage
 
 To compile and deploy a Compute@Edge service at the root of the repository, you can use the `fastly/compute-actions` main action. This will install the Fastly CLI, build your project, and deploy it to your Fastly service. If you used `fastly compute init` to initialise your project, this will work out of the box:
