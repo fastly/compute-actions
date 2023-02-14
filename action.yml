@@ -31,10 +31,6 @@ inputs:
     description: 'Set to true to enable verbose logging'
     required: false
     default: 'false'
-  skip_verification:
-    description: 'Skip verification steps before build.'
-    required: false
-    default: 'false'
   token:
     description: 'The GitHub token to use when interacting with the GitHub API'
     required: false

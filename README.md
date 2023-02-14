@@ -92,7 +92,6 @@ jobs:
       uses: fastly/compute-actions/build@v2
       with:
         verbose: true # optionally enables verbose output, defaults to false
-        skip_verification: true # optional, defaults to false
 
     - name: Deploy Compute@Edge Package
       uses: fastly/compute-actions/deploy@v2
@@ -113,7 +112,6 @@ The following inputs can be used as `with` keys for the actions in this reposito
 * `comment` - An optional comment to be included with the deployed service version. (deploy only)
 * `version` - Version to clone from when deploying. Can be "latest", "active", or the number of a specific version. (deploy only)
 * `verbose` - Set to true to enable verbose logging.
-* `skip_verification` - Skip verification steps before build. (build only)
 * `token` - The GitHub token to use when interacting with the GitHub API.
 
 ## Security issues
