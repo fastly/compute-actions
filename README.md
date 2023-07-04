@@ -66,12 +66,15 @@ Alternatively, you can manually run the individual GitHub Actions for Compute@Ed
 - [fastly/compute-actions/setup](setup/index.js) - Download the Fastly CLI if not already installed
 - [fastly/compute-actions/build](build/index.js) - Build a Compute@Edge project. Equivalent to `fastly compute build`
 - [fastly/compute-actions/deploy](deploy/index.js) - Deploy a Compute@Edge project. Equivalent to `fastly compute deploy`
+- [fastly/compute-actions/preview](preview/action.yml) - Deploy a Compute@Edge project to a new Fastly Service, which is deleted when the pull-request is merged or closed.
+
+#### Deploy to Fastly when push to `main`
 
 ```yml
 name: Deploy Application
 on:
   push:
-    branches: [master]
+    branches: [main]
 
 jobs:
   deploy:
@@ -100,6 +103,29 @@ jobs:
         comment: 'Deployed via GitHub Actions' # optional
       env:
         FASTLY_API_TOKEN: ${{ secrets.FASTLY_API_TOKEN }}
+```
+
+#### Preview on Fastly for each pull-request
+
+```yml
+name: Fastly Compute@Edge Branch Previews
+concurrency:
+  group: ${{ github.head_ref || github.run_id }}-${{ github.workflow}}
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, closed]
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - uses: actions/checkout@v3
+      - uses: fastly/compute-actions/preview@v5
+        with:
+          fastly-api-token: ${{ secrets.FASTLY_API_KEY }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
 ```
 
 ### Inputs
