@@ -1,0 +1,18 @@
+name: Fastly Compute@Edge Branch Previews
+concurrency:
+  group: ${{ github.head_ref || github.run_id }}-${{ github.workflow}}
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, closed]
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - uses: actions/checkout@v3
+      - uses: fastly/compute-actions/preview@v5
+        with:
+          fastly-api-token: ${{ secrets.FASTLY_API_KEY }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
