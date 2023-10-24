@@ -1,4 +1,4 @@
-name: Fastly Compute@Edge Branch Previews
+name: Fastly Compute Branch Previews
 concurrency:
   group: ${{ github.head_ref || github.run_id }}-${{ github.workflow}}
 on:

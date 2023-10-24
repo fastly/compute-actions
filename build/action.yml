@@ -1,6 +1,6 @@
-name: 'Build a Compute@Edge package'
+name: 'Build a Compute package'
 author: 'Fastly'
-description: 'Compiles and packages a Compute@Edge project using the Fastly CLI.'
+description: 'Compiles and packages a Compute project using the Fastly CLI.'
 
 branding:
   icon: 'layers'

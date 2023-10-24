@@ -1,6 +1,6 @@
-name: 'Build and deploy a Compute@Edge project'
+name: 'Build and deploy a Compute project'
 author: Fastly
-description: 'Build and deploy a Compute@Edge package using the Fastly CLI.'
+description: 'Build and deploy a Compute package using the Fastly CLI.'
 
 branding:
   icon: 'cloud-lightning'
