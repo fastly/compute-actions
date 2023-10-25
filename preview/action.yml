@@ -11,10 +11,10 @@ inputs:
 
 outputs:
   domain:
-    description: "Preview domain for Fastly Compute@Edge Service"
+    description: "Preview domain for Fastly Compute Service"
     value: ${{ steps.domain.outputs.DOMAIN }}
   service_name:
-    description: "Preview service name for Fastly Compute@Edge Service"
+    description: "Preview service name for Fastly Compute Service"
     value: ${{ steps.service-name.outputs.SERVICE_NAME }}
 
 runs:

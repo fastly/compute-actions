@@ -1,4 +1,4 @@
-name: Test Compute@Edge Workflow
+name: Test Compute Workflow
 on: [push]
 
 jobs:
