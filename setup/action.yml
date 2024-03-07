@@ -1,13 +1,13 @@
 name: 'Setup the Fastly CLI for Compute'
 author: 'Fastly'
-description: 'Downloads and configures the Fastly CLI.'
+description: 'Downloads and configures the Fastly CLI and Fastly Viceroy.'
 
 branding:
   icon: 'settings'
   color: 'red'
 
 runs:
-  using: 'node16'
+  using: 'node20'
   main: 'index.js'
 
 inputs:

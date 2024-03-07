@@ -7,7 +7,7 @@ branding:
   color: 'red'
 
 runs:
-  using: 'node16'
+  using: 'node20'
   main: 'index.js'
 
 inputs:
