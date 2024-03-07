@@ -1,18 +1,22 @@
 name: 'Setup the Fastly CLI for Compute'
 author: 'Fastly'
-description: 'Downloads and configures the Fastly CLI.'
+description: 'Downloads and configures the Fastly CLI and Viceroy.'
 
 branding:
   icon: 'settings'
   color: 'red'
 
 runs:
-  using: 'node16'
+  using: 'node20'
   main: 'index.js'
 
 inputs:
   cli_version:
-    description: 'The version of the Fastly CLI to install, e.g. v0.20.0'
+    description: 'The version of the Fastly CLI to install, e.g. v0.1.0'
+    required: false
+    default: 'latest'
+  viceroy_version:
+    description: 'The version of Viceroy to install, e.g. v0.1.0'
     required: false
     default: 'latest'
   token:
