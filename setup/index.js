@@ -30,13 +30,14 @@ async function setup() {
 }
 
 async function downloadBin(bin) {
-  let binVersion = core.getInput(`${bin}_version`);
+  let interfaceName = bin == 'fastly' ? 'cli' : bin
+  let binVersion = core.getInput(`${interfaceName}_version`);
 
   // Normalize version string
   if (binVersion !== 'latest') {
     const valid = semver.valid(binVersion);
     if (!valid) {
-      core.setFailed(`The provided ${bin}_version (${binVersion}) is not a valid SemVer string.`);
+      core.setFailed(`The provided ${interfaceName}_version (${binVersion}) is not a valid SemVer string.`);
       return;
     }
 
@@ -54,7 +55,7 @@ async function downloadBin(bin) {
   const octo = core.getInput('token') ? new Octokit({authStrategy: createActionAuth}) : new Octokit();
   const repo = {
     owner: 'fastly',
-    repo: bin == 'fastly' ? 'cli' : bin,
+    repo: interfaceName,
     tag: binVersion
   };
 
@@ -77,13 +78,14 @@ async function downloadBin(bin) {
   let os = platform;
   let nameSuffix = `_${os}-amd64.tar.gz`;
   if (os === 'win32') {
-    nameSuffix = '_windows-amd64.zip';
+    nameSuffix = '_windows-amd64.tar.gz';
   }
+
   // Download requested version
   let asset = release.data.assets.find((a) => a.name.endsWith(nameSuffix));
 
   if (!asset) {
-    core.setFailed(`Unable to find a suitable binary for release ${release.data.name}`);
+    core.setFailed(`Unable to find a suitable binary that ends with ${nameSuffix} for release ${release.data.name}`);
     return;
   }
 
