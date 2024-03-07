@@ -5,70 +5,69 @@ const {createActionAuth} = require('@octokit/auth-action');
 const semver = require('semver');
 const { platform } = require('process');
 
-const checkCLI = require('../util/cli');
-const checkViceroy = require('../util/viceroy');
+const checkBin = require('../util/bin');
 
 async function setup() {
   try {
-    await checkCLI();
+    await checkBin('fastly', 'version');
   } catch (err) {
-    await downloadCLI();
+    await downloadBin('fastly');
   }
 
-  checkCLI().catch((err) => {
+  checkBin('fastly', 'version').catch((err) => {
     core.setFailed(err.message);
   });
 
   try {
-    await checkViceroy();
+    await checkBin('viceroy', '--version');
   } catch (err) {
-    await downloadViceroy();
+    await downloadBin('viceroy');
   }
 
-  checkViceroy().catch((err) => {
+  checkBin('viceroy', '--version').catch((err) => {
     core.setFailed(err.message);
   });
 }
 
-async function downloadCLI() {
-  let cliVersion = core.getInput('cli_version');
+async function downloadBin(bin) {
+  let binVersion = core.getInput(`${bin}_version`);
 
   // Normalize version string
-  if (cliVersion !== 'latest') {
-    const valid = semver.valid(cliVersion);
+  if (binVersion !== 'latest') {
+    const valid = semver.valid(binVersion);
     if (!valid) {
-      core.setFailed(`The provided cli_version (${cliVersion}) is not a valid SemVer string.`);
+      core.setFailed(`The provided ${bin}_version (${binVersion}) is not a valid SemVer string.`);
       return;
     }
 
-    cliVersion = `v${valid}`;
+    binVersion = `v${valid}`;
   }
 
   // Check to see if requested version is cached
-  let existingVersion = tc.find('fastly', cliVersion);
+  let existingVersion = tc.find(bin, binVersion);
   if (existingVersion) {
     core.addPath(existingVersion);
     return;
   }
 
-  // Fetch requested release from fastly/cli repo
+  // Fetch requested release from the relevant repo
   const octo = core.getInput('token') ? new Octokit({authStrategy: createActionAuth}) : new Octokit();
   const repo = {
     owner: 'fastly',
-    repo: 'cli',
-    tag: cliVersion
+    repo: bin == 'fastly' ? 'cli' : bin,
+    tag: binVersion
   };
 
   let release;
   try {
-    release = await (cliVersion === 'latest' ? octo.repos.getLatestRelease(repo) : octo.repos.getReleaseByTag(repo));
+    release = await (binVersion === 'latest' ? octo.repos.getLatestRelease(repo) : octo.repos.getReleaseByTag(repo));
   } catch (err) {
-    core.setFailed(`Unable to fetch the requested release (${cliVersion}): ${err.message}`);
+    core.setFailed(`Unable to fetch the requested release (${binVersion}): ${err.message}`);
   }
 
   // If requested version is 'latest', return latest version from cache if available
-  if (cliVersion === 'latest') {
-    let existingVersion = tc.find('fastly', release.data.name);
+  if (binVersion === 'latest') {
+    let existingVersion = tc.find(bin, release.data.name);
     if (existingVersion) {
       core.addPath(existingVersion);
       return;
@@ -88,89 +87,17 @@ async function downloadCLI() {
     return;
   }
 
-  core.info(`Downloading Fastly CLI (${release.data.name}) from ${asset.browser_download_url}`);
+  core.info(`Downloading '${bin}' (${release.data.name}) from ${asset.browser_download_url}`);
 
   // Cache downloaded binary
-  let cliArchive = await tc.downloadTool(asset.browser_download_url);
-  let cliPath;
+  let binArchive = await tc.downloadTool(asset.browser_download_url);
+  let binPath;
   if (asset.name.endsWith('.zip')) {
-    cliPath = await tc.extractZip(cliArchive);
+    binPath = await tc.extractZip(binArchive);
   } else {
-    cliPath = await tc.extractTar(cliArchive);
+    binPath = await tc.extractTar(binArchive);
   }
-  const cachedPath = await tc.cacheDir(cliPath, 'fastly', release.data.name);
-  core.addPath(cachedPath);
-}
-
-async function downloadViceroy() {
-  let viceroyVersion = core.getInput('viceroy_version');
-
-  // Normalize version string
-  if (viceroyVersion !== 'latest') {
-    const valid = semver.valid(viceroyVersion);
-    if (!valid) {
-      core.setFailed(`The provided viceroy_version (${viceroyVersion}) is not a valid SemVer string.`);
-      return;
-    }
-
-    viceroyVersion = `v${valid}`;
-  }
-
-  // Check to see if requested version is cached
-  let existingVersion = tc.find('viceroy', viceroyVersion);
-  if (existingVersion) {
-    core.addPath(existingVersion);
-    return;
-  }
-
-  // Fetch requested release from fastly/cli repo
-  const octo = core.getInput('token') ? new Octokit({authStrategy: createActionAuth}) : new Octokit();
-  const repo = {
-    owner: 'fastly',
-    repo: 'viceroy',
-    tag: viceroyVersion
-  };
-
-  let release;
-  try {
-    release = await (viceroyVersion === 'latest' ? octo.repos.getLatestRelease(repo) : octo.repos.getReleaseByTag(repo));
-  } catch (err) {
-    core.setFailed(`Unable to fetch the requested release (${viceroyVersion}): ${err.message}`);
-  }
-
-  // If requested version is 'latest', return latest version from cache if available
-  if (viceroyVersion === 'latest') {
-    let existingVersion = tc.find('viceroy', release.data.name);
-    if (existingVersion) {
-      core.addPath(existingVersion);
-      return;
-    }
-  }
-
-  let os = platform;
-  let nameSuffix = `_${os}-amd64.tar.gz`;
-  if (os === 'win32') {
-    nameSuffix = '_windows-amd64.zip';
-  }
-  // Download requested version
-  let asset = release.data.assets.find((a) => a.name.endsWith(nameSuffix));
-
-  if (!asset) {
-    core.setFailed(`Unable to find a suitable binary for release ${release.data.name}`);
-    return;
-  }
-
-  core.info(`Downloading Viceroy (${release.data.name}) from ${asset.browser_download_url}`);
-
-  // Cache downloaded binary
-  let viceroyArchive = await tc.downloadTool(asset.browser_download_url);
-  let viceroyPath;
-  if (asset.name.endsWith('.zip')) {
-    viceroyPath = await tc.extractZip(viceroyArchive);
-  } else {
-    viceroyPath = await tc.extractTar(viceroyArchive);
-  }
-  const cachedPath = await tc.cacheDir(viceroyPath, 'viceroy', release.data.name);
+  const cachedPath = await tc.cacheDir(binPath, bin, release.data.name);
   core.addPath(cachedPath);
 }
 
