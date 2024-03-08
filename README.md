@@ -20,7 +20,7 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
 
     - name: Install Rust toolchain
       uses: actions-rs/toolchain@v1
@@ -48,7 +48,7 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
 
     - name: Install project dependencies
       run: npm install
@@ -121,7 +121,7 @@ jobs:
       run:
         shell: bash
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - uses: fastly/compute-actions/preview@v5
         with:
           fastly-api-token: ${{ secrets.FASTLY_API_KEY }}
