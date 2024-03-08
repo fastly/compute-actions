@@ -4,7 +4,7 @@ const artifact = require('@actions/artifact');
 const glob = require('@actions/glob');
 const path = require('path');
 
-const checkCLI = require('../util/cli');
+const checkBin = require('../util/bin');
 
 const projectDirectory = core.getInput('project_directory');
 const serviceId = core.getInput('service_id');
@@ -12,7 +12,7 @@ const comment = core.getInput('comment');
 const verbose = core.getBooleanInput('verbose');
 const version = core.getInput('version');
 
-checkCLI().then(async () => {
+checkBin('fastly', 'version').then(async () => {
   let params = ['compute', 'deploy', '--non-interactive'];
   if (serviceId !== 'default') params.push('--service-id=' + serviceId);
   if (verbose) params.push('--verbose');

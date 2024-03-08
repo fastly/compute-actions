@@ -20,13 +20,12 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
 
     - name: Install Rust toolchain
-      uses: actions-rs/toolchain@v1
+      uses: dtolnay/rust-toolchain@stable
       with:
-          toolchain: 1.54.0 # current Rust toolchain for Compute
-          target: wasm32-wasi # WebAssembly target
+          targets: wasm32-wasi # WebAssembly target
 
     - name: Deploy to Compute
       uses: fastly/compute-actions@v5
@@ -48,7 +47,7 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
 
     - name: Install project dependencies
       run: npm install
@@ -85,7 +84,7 @@ jobs:
     - name: Set up Fastly CLI
       uses: fastly/compute-actions/setup@v5
       with:
-        cli_version: '0.36.0' # optional, defaults to 'latest'
+        cli_version: '1.0.0' # optional, defaults to 'latest'
         token: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Install Dependencies
@@ -121,7 +120,7 @@ jobs:
       run:
         shell: bash
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - uses: fastly/compute-actions/preview@v5
         with:
           fastly-api-token: ${{ secrets.FASTLY_API_KEY }}
@@ -132,13 +131,13 @@ jobs:
 
 The following inputs can be used as `with` keys for the actions in this repository; none of them are required:
 
-* `project_directory` - Directory of the project to deploy, relative to the repository root.
-* `cli_version` - The version of the Fastly CLI to install, e.g. v0.20.0
-* `service_id` - The Fastly service ID to deploy to. Defaults to the value in `fastly.toml`. (deploy only)
-* `comment` - An optional comment to be included with the deployed service version. (deploy only)
-* `version` - Version to clone from when deploying. Can be "latest", "active", or the number of a specific version. (deploy only)
-* `verbose` - Set to true to enable verbose logging.
-* `token` - The GitHub token to use when interacting with the GitHub API.
+- `project_directory` - Directory of the project to deploy, relative to the repository root.
+- `cli_version` - The version of the Fastly CLI to install, e.g. v0.20.0
+- `service_id` - The Fastly service ID to deploy to. Defaults to the value in `fastly.toml`. (deploy only)
+- `comment` - An optional comment to be included with the deployed service version. (deploy only)
+- `version` - Version to clone from when deploying. Can be "latest", "active", or the number of a specific version. (deploy only)
+- `verbose` - Set to true to enable verbose logging.
+- `token` - The GitHub token to use when interacting with the GitHub API.
 
 ## Security issues
 
