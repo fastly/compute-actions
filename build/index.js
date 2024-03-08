@@ -1,11 +1,11 @@
 const core = require('@actions/core');
 const exec = require('@actions/exec');
 
-const checkCLI = require('../util/cli');
+const checkCLI = require('../util/bin');
 
 const verbose = core.getBooleanInput('verbose');
 
-checkCLI().then(() => {
+checkCLI('fastly', 'version').then(() => {
   let params = ['compute', 'build', '--non-interactive'];
   if (verbose) params.push('--verbose');
 
