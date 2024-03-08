@@ -5,7 +5,7 @@ const checkCLI = require('../util/bin');
 
 const verbose = core.getBooleanInput('verbose');
 
-checkCLI().then(() => {
+checkCLI('fastly', 'version').then(() => {
   let params = ['compute', 'build', '--non-interactive'];
   if (verbose) params.push('--verbose');
 
