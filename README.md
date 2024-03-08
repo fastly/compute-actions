@@ -23,10 +23,9 @@ jobs:
     - uses: actions/checkout@v4
 
     - name: Install Rust toolchain
-      uses: actions-rs/toolchain@v1
+      uses: dtolnay/rust-toolchain@stable
       with:
-          toolchain: 1.54.0 # current Rust toolchain for Compute
-          target: wasm32-wasi # WebAssembly target
+          targets: wasm32-wasi # WebAssembly target
 
     - name: Deploy to Compute
       uses: fastly/compute-actions@v5
