@@ -1,7 +1,7 @@
 const core = require('@actions/core');
 const exec = require('@actions/exec');
 
-const checkCLI = require('../util/cli');
+const checkCLI = require('../util/bin');
 
 const verbose = core.getBooleanInput('verbose');
 
