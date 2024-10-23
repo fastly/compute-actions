@@ -41,6 +41,6 @@ inputs:
 
 runs:
   using: node20
-  pre: setup/index.js
-  main: build/index.js
-  post: deploy/index.js
+  pre: setup/dist/index.js
+  main: build/dist/index.js
+  post: deploy/dist/index.js
