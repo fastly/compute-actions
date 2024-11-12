@@ -1,6 +1,6 @@
 const core = require('@actions/core');
 const exec = require('@actions/exec');
-const artifact = require('@actions/artifact');
+const { DefaultArtifactClient } = require("@actions/artifact");
 const glob = require('@actions/glob');
 const path = require('path');
 
@@ -37,6 +37,6 @@ async function uploadArtifact() {
 
   const artifactName = path.parse(files[0]).name;
 
-  const artifactClient = artifact.create();
+  const artifactClient = new DefaultArtifactClient();
   await artifactClient.uploadArtifact(artifactName, files, '.', {});
 }
