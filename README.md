@@ -28,7 +28,7 @@ jobs:
           targets: wasm32-wasi # WebAssembly target
 
     - name: Deploy to Compute
-      uses: fastly/compute-actions@v9
+      uses: fastly/compute-actions@v10
       env:
         FASTLY_API_TOKEN: ${{ secrets.FASTLY_API_TOKEN }}
 ```
@@ -53,7 +53,7 @@ jobs:
       run: npm install
 
     - name: Deploy to Compute
-      uses: fastly/compute-actions@v9
+      uses: fastly/compute-actions@v10
       env:
         FASTLY_API_TOKEN: ${{ secrets.FASTLY_API_TOKEN }}
 ```
@@ -82,7 +82,7 @@ jobs:
     - uses: actions/checkout@v3
 
     - name: Set up Fastly CLI
-      uses: fastly/compute-actions/setup@v9
+      uses: fastly/compute-actions/setup@v10
       with:
         cli_version: '1.0.0' # optional, defaults to 'latest'
         token: ${{ secrets.GITHUB_TOKEN }}
@@ -91,12 +91,12 @@ jobs:
       run: npm install
 
     - name: Build Compute Package
-      uses: fastly/compute-actions/build@v9
+      uses: fastly/compute-actions/build@v10
       with:
         verbose: true # optionally enables verbose output, defaults to false
 
     - name: Deploy Compute Package
-      uses: fastly/compute-actions/deploy@v9
+      uses: fastly/compute-actions/deploy@v10
       with:
         service_id: '4tYGx...' # optional, defaults to value in fastly.toml
         comment: 'Deployed via GitHub Actions' # optional
@@ -121,7 +121,7 @@ jobs:
         shell: bash
     steps:
       - uses: actions/checkout@v4
-      - uses: fastly/compute-actions/preview@v9
+      - uses: fastly/compute-actions/preview@v10
         with:
           fastly-api-token: ${{ secrets.FASTLY_API_KEY }}
           github-token: ${{ secrets.GITHUB_TOKEN }}
