@@ -27,7 +27,7 @@ runs:
 
     # Download Fastly CLI
     - name: Set up Fastly CLI
-      uses: fastly/compute-actions/setup@v5
+      uses: fastly/compute-actions/setup@v10
       with:
         token: ${{ inputs.github-token }}
         cli_version: 'latest'
