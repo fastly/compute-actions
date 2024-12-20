@@ -14,7 +14,7 @@ You will need to install the correct Rust toolchain for the action to build your
 name: Deploy Application
 on:
   push:
-    branches: [master]
+    branches: [main]
 
 jobs:
   deploy:
@@ -41,7 +41,7 @@ GitHub Action runners come with a node toolchain pre-installed, so you can just 
 name: Deploy Application
 on:
   push:
-    branches: [master]
+    branches: [main]
 
 jobs:
   deploy:
