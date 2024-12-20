@@ -33,7 +33,7 @@ jobs:
         FASTLY_API_TOKEN: ${{ secrets.FASTLY_API_TOKEN }}
 ```
 
-### npm-based Workflow (JavaScript + AssemblyScript)
+### npm-based Workflow (JavaScript)
 
 GitHub Action runners come with a node toolchain pre-installed, so you can just run `npm install` to fetch your project's dependencies.
 
