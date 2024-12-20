@@ -58,6 +58,33 @@ jobs:
         FASTLY_API_TOKEN: ${{ secrets.FASTLY_API_TOKEN }}
 ```
 
+### go-based Workflow (Go)
+
+Since you need to pick Go version equal to 1.21 or later to build your Go project with GOARCH=wasm and GOOS=wasip1 target, it is recommended to use `actions/setup-go` with the following configuration, so that you can switch to any version of Go you need;
+
+```yml
+name: Deploy Application
+on:
+  push:
+    branches: [main]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Install Go toolchain
+      uses: actions/setup-go@v5
+      with:
+          go-version: "1.23"
+
+    - name: Deploy to the Compute platform
+      uses: fastly/compute-actions@v5
+      env:
+        FASTLY_API_TOKEN: ${{ secrets.FASTLY_API_TOKEN }}
+```
+
 ### Custom Workflows
 
 Alternatively, you can manually run the individual GitHub Actions for Compute if you want finer control over your workflow:
