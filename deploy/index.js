@@ -1,8 +1,5 @@
 const core = require('@actions/core');
 const exec = require('@actions/exec');
-const { DefaultArtifactClient } = require("@actions/artifact");
-const glob = require('@actions/glob');
-const path = require('path');
 
 const checkBin = require('../util/bin');
 
@@ -19,24 +16,9 @@ checkBin('fastly', 'version').then(async () => {
   if (comment) params.push('--comment=' + comment);
   if (version) params.push('--version=' + version);
 
-  const result = await exec.exec('fastly', params, {
+  await exec.exec('fastly', params, {
     cwd: projectDirectory
   });
-  return uploadArtifact(result);
 }).catch((err) => {
   core.setFailed(err.message);
 });
-
-async function uploadArtifact() {
-  const globber = await glob.create(path.join(projectDirectory, 'pkg', '*.tar.gz'));
-  const files = await globber.glob();
-
-  if (files.length < 1) {
-    throw "There is no archive in the pkg directory to upload.";
-  }
-
-  const artifactName = path.parse(files[0]).name;
-
-  const artifactClient = new DefaultArtifactClient();
-  await artifactClient.uploadArtifact(artifactName, files, '.', {});
-}
