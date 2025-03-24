@@ -35,7 +35,7 @@ jobs:
 
 ### npm-based Workflow (JavaScript)
 
-GitHub Action runners come with a node toolchain pre-installed, so you can just run `npm install` to fetch your project's dependencies.
+GitHub Action runners come with a node toolchain pre-installed, so you can just run `npm ci` to fetch your project's dependencies.
 
 ```yml
 name: Deploy Application
@@ -50,7 +50,7 @@ jobs:
     - uses: actions/checkout@v4
 
     - name: Install project dependencies
-      run: npm install
+      run: npm ci
 
     - name: Deploy to Compute
       uses: fastly/compute-actions@v11
@@ -115,7 +115,7 @@ jobs:
         token: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Install Dependencies
-      run: npm install
+      run: npm ci
 
     - name: Build Compute Package
       uses: fastly/compute-actions/build@v11
