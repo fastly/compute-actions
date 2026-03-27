@@ -27,7 +27,7 @@ runs:
 
     # Download Fastly CLI
     - name: Set up Fastly CLI
-      uses: fastly/compute-actions/setup@v12
+      uses: fastly/compute-actions/setup@v13
       with:
         token: ${{ inputs.github-token }}
         cli_version: 'latest'
@@ -62,7 +62,7 @@ runs:
     # Retrieve the newly created domain for the service and add it to the pull-request summary
     - if: github.event.action != 'closed'
       working-directory: ${{ inputs.project_directory }}
-      run: fastly domain list --quiet --version latest --json --service-name="${{ steps.service-name.outputs.SERVICE_NAME }}" --token ${{ inputs.fastly-api-token }} | jq -r '.[0].Name'
+      run: fastly service domain list --quiet --version latest --json --service-name="${{ steps.service-name.outputs.SERVICE_NAME }}" --token ${{ inputs.fastly-api-token }} | jq -r '.[0].Name'
       shell: bash
       env:
         FASTLY_API_TOKEN: ${{ inputs.fastly-api-token }}
@@ -72,7 +72,7 @@ runs:
       name: Set domain
       shell: bash
       id: domain
-      run: echo "DOMAIN=$(fastly domain list --quiet --version latest --json --service-name="${{ steps.service-name.outputs.SERVICE_NAME }}" --token ${{ inputs.fastly-api-token }} | jq -r '.[0].Name')" >> "$GITHUB_OUTPUT"
+      run: echo "DOMAIN=$(fastly service domain list --quiet --version latest --json --service-name="${{ steps.service-name.outputs.SERVICE_NAME }}" --token ${{ inputs.fastly-api-token }} | jq -r '.[0].Name')" >> "$GITHUB_OUTPUT"
       env:
         FASTLY_API_TOKEN: ${{ inputs.fastly-api-token }}
 
