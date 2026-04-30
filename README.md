@@ -111,7 +111,7 @@ jobs:
     - name: Set up Fastly CLI
       uses: fastly/compute-actions/setup@v13
       with:
-        cli_version: '1.0.0' # optional, defaults to 'latest'
+        # cli_version: '14.3.1' # optional, defaults to 'latest'
         token: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Install Dependencies
