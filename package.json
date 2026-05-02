@@ -19,7 +19,7 @@
   "dependencies": {
     "@actions/core": "1.11.1",
     "@actions/exec": "^1.1.1",
-    "@actions/tool-cache": "2.0.1",
+    "@actions/tool-cache": "2.0.2",
     "@octokit/auth-action": "5.1.1",
     "@octokit/rest": "21.0.2",
     "@vercel/ncc": "^0.38.2",
