@@ -40,7 +40,26 @@ inputs:
     required: false
 
 runs:
-  using: node20
-  pre: setup/dist/index.js
-  main: build/dist/index.js
-  post: deploy/dist/index.js
+  using: composite
+  steps:
+    - name: Set up Fastly CLI
+      uses: ./setup
+      with:
+        cli_version: ${{ inputs.cli_version }}
+        viceroy_version: ${{ inputs.viceroy_version }}
+        token: ${{ inputs.token }}
+
+    - name: Build Compute package
+      uses: ./build
+      with:
+        project_directory: ${{ inputs.project_directory }}
+        verbose: ${{ inputs.verbose }}
+
+    - name: Deploy Compute package
+      uses: ./deploy
+      with:
+        project_directory: ${{ inputs.project_directory }}
+        service_id: ${{ inputs.service_id }}
+        comment: ${{ inputs.comment }}
+        version: ${{ inputs.version }}
+        verbose: ${{ inputs.verbose }}
