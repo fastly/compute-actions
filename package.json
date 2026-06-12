@@ -23,7 +23,7 @@
     "@octokit/auth-action": "5.1.1",
     "@octokit/rest": "21.0.2",
     "@vercel/ncc": "^0.38.2",
-    "semver": "7.6.3"
+    "semver": "7.8.1"
   },
   "scripts": {
     "bundle-setup": "npx ncc build setup/index.js -o setup/dist --license licenses.txt",
