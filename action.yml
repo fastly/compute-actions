@@ -43,20 +43,20 @@ runs:
   using: composite
   steps:
     - name: Set up Fastly CLI
-      uses: ./setup
+      uses: fastly/compute-actions/setup@v14
       with:
         cli_version: ${{ inputs.cli_version }}
         viceroy_version: ${{ inputs.viceroy_version }}
         token: ${{ inputs.token }}
 
     - name: Build Compute package
-      uses: ./build
+      uses: fastly/compute-actions/build@v14
       with:
         project_directory: ${{ inputs.project_directory }}
         verbose: ${{ inputs.verbose }}
 
     - name: Deploy Compute package
-      uses: ./deploy
+      uses: fastly/compute-actions/deploy@v14
       with:
         project_directory: ${{ inputs.project_directory }}
         service_id: ${{ inputs.service_id }}
