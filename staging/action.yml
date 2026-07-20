@@ -1,0 +1,92 @@
+name: 'Stage a Compute package'
+author: 'Fastly'
+description: 'Builds and stages a Compute package to the Fastly staging environment using the Fastly CLI.'
+
+branding:
+  icon: 'upload-cloud'
+  color: 'red'
+
+inputs:
+  project_directory:
+    description: 'Directory of the project to build, relative to the repository root.'
+    required: false
+    default: './'
+  service_id:
+    description: 'The Fastly service ID to stage to. Defaults to the value in fastly.toml.'
+    required: false
+    default: ''
+  comment:
+    description: 'An optional comment to be included with the staged service version.'
+    required: false
+    default: ''
+  verbose:
+    description: 'Set to true to enable verbose logging'
+    required: false
+    default: 'false'
+  cli_version:
+    description: 'The version of the Fastly CLI to install, e.g. v0.20.0'
+    required: false
+    default: 'latest'
+  token:
+    description: 'The GitHub token to use when downloading the Fastly CLI'
+    required: false
+
+runs:
+  using: "composite"
+  steps:
+    - name: Set up Fastly CLI
+      uses: fastly/compute-actions/setup@main
+      with:
+        token: ${{ inputs.token }}
+        cli_version: ${{ inputs.cli_version }}
+
+    - name: Build Compute package
+      run: fastly compute build --non-interactive
+      shell: bash
+      working-directory: ${{ inputs.project_directory }}
+
+    - name: Upload package as draft version
+      id: upload-draft
+      env:
+        FASTLY_API_TOKEN: ${{ env.FASTLY_API_TOKEN }}
+      run: |
+        ARGS="--autoclone --version=active"
+        if [ -n "${{ inputs.service_id }}" ]; then
+          ARGS="$ARGS --service-id=${{ inputs.service_id }}"
+        fi
+        OUTPUT=$(fastly compute update $ARGS 2>&1 | tee /dev/stderr)
+        VERSION=$(echo "$OUTPUT" | grep -oE 'version [0-9]+' | grep -oE '[0-9]+')
+        if [ -z "$VERSION" ]; then
+          echo "::error::Failed to extract version number from fastly compute update output"
+          exit 1
+        fi
+        echo "version=$VERSION" >> $GITHUB_OUTPUT
+        echo "Uploaded draft version: $VERSION"
+      shell: bash
+      working-directory: ${{ inputs.project_directory }}
+
+    - name: Add comment to draft version
+      if: ${{ inputs.comment != '' }}
+      env:
+        FASTLY_API_TOKEN: ${{ env.FASTLY_API_TOKEN }}
+      run: |
+        ARGS="--version=${{ steps.upload-draft.outputs.version }} --comment=${{ inputs.comment }}"
+        if [ -n "${{ inputs.service_id }}" ]; then
+          ARGS="$ARGS --service-id=${{ inputs.service_id }}"
+        fi
+        fastly service-version update $ARGS
+      shell: bash
+      working-directory: ${{ inputs.project_directory }}
+
+    - name: Stage draft version
+      env:
+        FASTLY_API_TOKEN: ${{ env.FASTLY_API_TOKEN }}
+      run: |
+        ARGS="--version=${{ steps.upload-draft.outputs.version }}"
+        if [ -n "${{ inputs.service_id }}" ]; then
+          ARGS="$ARGS --service-id=${{ inputs.service_id }}"
+        fi
+        fastly service-version stage $ARGS
+        echo "Successfully staged version ${{ steps.upload-draft.outputs.version }}"
+      shell: bash
+      working-directory: ${{ inputs.project_directory }}
