@@ -93,6 +93,7 @@ Alternatively, you can manually run the individual GitHub Actions for Compute if
 - [fastly/compute-actions/build](build/index.js) - Build a Compute project. Equivalent to `fastly compute build`
 - [fastly/compute-actions/deploy](deploy/index.js) - Deploy a Compute project. Equivalent to `fastly compute deploy`
 - [fastly/compute-actions/preview](preview/action.yml) - Deploy a Compute project to a new Fastly Service, which is deleted when the pull-request is merged or closed.
+- [fastly/compute-actions/staging](staging/action.yml) - Build and stage a Compute project to the Fastly staging environment without activating it.
 
 #### Deploy to Fastly when push to `main`
 
@@ -131,6 +132,32 @@ jobs:
         FASTLY_API_TOKEN: ${{ secrets.FASTLY_API_TOKEN }}
 ```
 
+#### Stage to Fastly staging environment
+
+```yml
+name: Stage Application
+on:
+  push:
+    branches: [staging]
+
+jobs:
+  stage:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Install Dependencies
+      run: npm ci
+
+    - name: Stage Compute Package
+      uses: fastly/compute-actions/staging@v12
+      with:
+        service_id: '4tYGx...' # optional, defaults to value in fastly.toml
+        comment: 'Staged via GitHub Actions' # optional
+      env:
+        FASTLY_API_TOKEN: ${{ secrets.FASTLY_API_TOKEN }}
+```
+
 #### Preview on Fastly for each pull-request
 
 ```yml
@@ -160,8 +187,8 @@ The following inputs can be used as `with` keys for the actions in this reposito
 
 - `project_directory` - Directory of the project to deploy, relative to the repository root.
 - `cli_version` - The version of the Fastly CLI to install, e.g. v0.20.0
-- `service_id` - The Fastly service ID to deploy to. Defaults to the value in `fastly.toml`. (deploy only)
-- `comment` - An optional comment to be included with the deployed service version. (deploy only)
+- `service_id` - The Fastly service ID to deploy or stage to. Defaults to the value in `fastly.toml`. (deploy and staging)
+- `comment` - An optional comment to be included with the deployed or staged service version. (deploy and staging)
 - `version` - Version to clone from when deploying. Can be "latest", "active", or the number of a specific version. (deploy only)
 - `verbose` - Set to true to enable verbose logging.
 - `token` - The GitHub token to use when interacting with the GitHub API.
